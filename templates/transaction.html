@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+{% block title %}
+    Add Transaction
+{% endblock %}
+{% block main %}
+<center>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="container__form">
+        <form id="transaction" method ="POST">
+			<div class="form-group">
+				<select class="form-control" id="reason" name="reason" required>
+					<option value="" disabled selected>Select Reason</option>
+					{% for reason in reasons %}
+						<option value="{{ reason }}">{{ reason }}</option>
+					{% endfor %}
+					<option value="custom">Custom</option>
+				</select>
+				<input type="text" class="form-control" id="customReason" name="customReason" style="display: none;" placeholder="Custom Reason">
+			</div>
+			<div class="form-group">
+				<input type="number" class="form-control" name="amount" id="amount" placeholder="Amount" required>
+			</div>
+			<button class="btn" type="submit" name="credit" onclick="check(this.name)">Credit</button>
+			<button class="btn" type="submit" name="debit" onclick="check(this.name)">Debit</button>
+		</form>
+		
+    </div>
+    <script type="text/javascript">
+		function check(clicked){
+			var reason = document.getElementById("reason").value;
+			var amount = document.getElementById("amount").value;
+	
+			if (reason === "custom") {
+				var customReason = document.getElementById("customReason").value;
+				if (customReason === "") {
+					alert("Please enter a custom reason.");
+					return false;
+				}
+			}
+	
+			if (reason !== "" && amount !== "") {
+				var action;
+				if (clicked === "credit"){
+					action = "/credit";
+				} else {
+					action = "/debit";
+				}
+				document.getElementById("transaction").action = action;
+				document.getElementById("transaction").submit();
+			}
+		}
+	
+		// Show custom reason input field when "Custom" is selected
+		document.getElementById("reason").addEventListener("change", function() {
+			var reason = this.value;
+			if (reason === "custom") {
+				document.getElementById("customReason").style.display = "block";
+			} else {
+				document.getElementById("customReason").style.display = "none";
+			}
+		});
+	</script>
+</center>
+{% endblock %}

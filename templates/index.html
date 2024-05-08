@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+{% block title %}
+    Home
+{% endblock %}
+{% block main %}
+<br>
+<br>
+<div class="container">
+    <div class="container__left">
+        <h1>Track your Expenses</h1>
+        {% if session.user_id %}
+            <div class="container__btn">
+                <a href="/transaction">
+                    <button class="btn">START TRACKING</button>
+                </a>
+            </div>
+        {% else %}
+            <div class="container__btn">
+                <a href="/register">
+                    <button class="btn">START NOW</button>
+                </a>
+            </div>
+        {% endif %}
+    </div>
+      <div class="container__right">
+        <div class="images">
+          <img src="https://i.pinimg.com/736x/d4/d7/6f/d4d76fb6e7ea108371aa9e1d2caa8393.jpg" alt="tent-1" class="tent-1" />
+          
+        </div>
+        <div class="content">
+          <h4>smart tracking</h4>
+          <h2>WHY TRACK?</h2>
+          <h3>It's the cornerstone of financial success</h3>
+          <p>
+            Managing your finances effectively starts with understanding where your money goes. 
+            Expense Tracker helps you gain control over your spending by providing simple yet 
+            powerful tools to track and analyze your expenses.
+          </p>
+        </div>
+        <div class="socials">
+            <span>
+              <a href="#"><i class="ri-facebook-fill"></i></a>
+            </span>
+            <span>
+              <a href="#"><i class="ri-instagram-line"></i></a>
+            </span>
+            <span>
+              <a href="#"><i class="ri-twitter-fill"></i></a>
+            </span>
+          </div>
+    </div>
+</div>
+{% endblock %}

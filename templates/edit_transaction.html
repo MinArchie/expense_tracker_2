@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+{% block title %}
+    Edit Transaction
+{% endblock %}
+{% block main %}
+<center>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="container__form">
+        <h1>Edit Transaction</h1>
+        <form id="edit_transaction_form" method="POST">
+            <div class="form-group">
+                <label for="reason">Reason:</label>
+                <select class="form-control" id="reason" name="reason" required>
+                    <option value="" disabled>Select Reason</option>
+                    {% for reason in reasons %}
+                        <option value="{{ reason }}" {% if reason == transaction.reason %} selected {% endif %}>{{ reason }}</option>
+                    {% endfor %}
+                    <option value="custom">Custom</option>
+                </select>
+                <input type="text" class="form-control" id="customReason" name="customReason" style="display: none;" placeholder="Custom Reason">
+            </div>
+            <div class="form-group">
+                <label for="amount">Amount:</label>
+                <input type="number" class="form-control" name="amount" id="amount" placeholder="Amount" value="{{ transaction.amount }}" required>
+            </div>
+            <!-- Credit and Debit radio buttons -->
+            <div class="form-group">
+                <input type="radio" id="credit" name="type" value="C" {% if transaction.type == 'C' %} checked {% endif %}>
+                <label for="credit">Credit</label>
+                <input type="radio" id="debit" name="type" value="D" {% if transaction.type == 'D' %} checked {% endif %}>
+                <label for="debit">Debit</label>
+            </div>
+            <button class="btn btn-primary" type="submit">Submit</button>
+        </form>
+    </div>
+</center>
+<script type="text/javascript">
+    // Show custom reason input field when "Custom" is selected
+    document.getElementById("reason").addEventListener("change", function() {
+        var reason = this.value;
+        if (reason === "custom") {
+            document.getElementById("customReason").style.display = "block";
+        } else {
+            document.getElementById("customReason").style.display = "none";
+        }
+    });
+</script>
+{% endblock %}

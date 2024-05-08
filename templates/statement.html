@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+{% block title %}
+    Statement
+{% endblock %}
+{% block main %}
+<center>
+    <br>
+    <br>
+    <br>
+    <div id="statement">
+        <table id="statement-table">
+            <thead>
+                <th > Reason </th>
+                <th > Type </th>
+                <th > Amount </th>
+                <th > Actions </th> <!-- Added Actions column -->
+            </thead>
+            <tbody>
+                {% for record in records %}
+                    <tr>
+                        <td>{{ record.reason }}</td>
+                        <td>
+                            {% if 'C' == record.type %}
+                                {{ "Credit" }}
+                            {% else %}
+                                {{ "Debit" }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if record.type == 'C' %}
+                                {{ "+ ₹" + record.amount|string }}
+                            {% else %}
+                                {{ "- ₹" + record.amount|string }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            <!-- Dropdown for actions -->
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Actions
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="/edit_transaction/{{ record.id }}">Edit</a> <!-- Edit option -->
+                                    <a class="dropdown-item" href="/delete_transaction/{{ record.id }}">Delete</a> <!-- Delete option -->
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <th scope="col">Total</th>
+                <th scope="col"></th>
+                <th scope="col">{{ "Rs." + balance|string }}</th>
+                <th scope="col"></th> <!-- Empty column for alignment -->
+            </tfoot>
+        </table>
+    </div>
+</center>
+{% endblock %}
